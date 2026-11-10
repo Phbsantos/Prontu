@@ -43,6 +43,13 @@ psql_app() { docker exec -i "$APP_DB_CONTAINER" psql -v ON_ERROR_STOP=1 -U "$PG_
 psql_n8n() { docker exec -i "$N8N_DB_CONTAINER" psql -v ON_ERROR_STOP=1 -U "$N8N_DB_USER" -d "$N8N_DB_NAME" "$@"; }
 
 echo "== 0. Pré-requisitos"
+# O Postgres não renomeia o role da própria sessão. Se o role do app também for o
+# superusuário do container, crie um superusuário temporário e use-o aqui.
+if [ "$PG_ADMIN_USER" = "$OLD_USER" ]; then
+  echo "PG_ADMIN_USER não pode ser igual a OLD_USER (role da sessão não pode ser renomeado)."
+  echo "Crie um superusuário temporário: CREATE ROLE tmp_admin SUPERUSER LOGIN PASSWORD '...';"
+  exit 1
+fi
 falha() { echo "$1"; [ "$DRY_RUN" = "0" ] && exit 1; echo "(dry-run: seguindo mesmo assim)"; return 0; }
 [ -f "$CRED_FILE" ] || falha "Falta $CRED_FILE (copie o .example, preencha a senha real e use database=$NEW_DB, user=$NEW_USER)."
 [ ! -f "$CRED_FILE" ] || grep -q "\"database\": *\"$NEW_DB\"" "$CRED_FILE" || falha "$CRED_FILE precisa apontar para database=$NEW_DB"
