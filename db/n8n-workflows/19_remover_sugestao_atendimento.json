@@ -1,6 +1,6 @@
 {
-  "id": "eqtr19RemoverSugestaoAtendimento",
-  "name": "Equitar - DELETE /remover/sugestao-atendimento",
+  "id": "prt19RemoverSugestaoAtendimento",
+  "name": "Prontu - DELETE /remover/sugestao-atendimento",
   "active": true,
   "nodes": [
     {
@@ -32,7 +32,7 @@
         }
       },
       "credentials": {
-        "postgres": { "id": "eqtrPgCredential01", "name": "Equitar Postgres" }
+        "postgres": { "id": "prtPgCredential01", "name": "Prontu Postgres" }
       }
     },
     {

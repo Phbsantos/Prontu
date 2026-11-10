@@ -1,15 +1,5 @@
 let appointmentsData = [];
 
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text ?? '';
-    return div.innerHTML;
-}
-
-function escapeJsString(text) {
-    return String(text ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-}
-
 function getStatusBadgeHTML(status) {
     switch (status) {
         case 'Realizado':
@@ -97,7 +87,7 @@ function renderAppointments(data) {
             </div>
 
             <div class="pt-2 border-t border-slate-100 flex items-center justify-end">
-                <button onclick="openProntuario('${escapeJsString(item.paciente)}', '${escapeJsString(item.terapeuta)}', '${escapeJsString(item.status)}', '${escapeJsString(item.prontuario)}')" class="w-full sm:w-auto inline-flex items-center justify-center space-x-1.5 bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-xl border border-slate-200 transition-colors">
+                <button onclick="openProntuario('${escapeJsAttr(item.paciente)}', '${escapeJsAttr(item.terapeuta)}', '${escapeJsAttr(item.status)}', '${escapeJsAttr(item.prontuario)}')" class="w-full sm:w-auto inline-flex items-center justify-center space-x-1.5 bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-xl border border-slate-200 transition-colors">
                     <i class="fa-solid fa-notes-medical text-xs text-blue-600"></i>
                     <span>Ver Prontuário</span>
                 </button>

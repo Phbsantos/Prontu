@@ -1,3 +1,28 @@
+// Escape de HTML compartilhado — escapa & < > " ' (as aspas importam: sem elas
+// um valor com " quebra atributos como value="..." e vira injeção de HTML).
+// Use SEMPRE que um dado vindo da API/usuário entrar em innerHTML/template HTML.
+// Texto puro (textContent/innerText/.value) não precisa de escape.
+function escapeHtml(text) {
+    return String(text ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+// Para texto livre dentro de um handler inline: onclick="fn('${escapeJsAttr(x)}')".
+// Ordem importa: primeiro escapa pra string JS (barra invertida, aspa simples e
+// quebras de linha), depois pra HTML — o navegador decodifica o atributo antes
+// de executar o JS.
+function escapeJsAttr(text) {
+    const js = String(text ?? '')
+        .replace(/\\/g, '\\\\')
+        .replace(/'/g, "\\'")
+        .replace(/\r?\n/g, '\\n');
+    return escapeHtml(js);
+}
+
 // Pequenos construtores de HTML reaproveitados entre páginas — hoje só o
 // cartão de estatística do estilo dashboard (usado em index.html; dá pra
 // reusar em coordenacao.html quando os indicadores agregados existirem).

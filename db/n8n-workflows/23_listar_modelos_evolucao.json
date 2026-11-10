@@ -1,6 +1,6 @@
 {
-  "id": "eqtr23ListarModelosEvolucao",
-  "name": "Equitar - GET /listar/modelos-evolucao",
+  "id": "prt23ListarModelosEvolucao",
+  "name": "Prontu - GET /listar/modelos-evolucao",
   "active": true,
   "nodes": [
     {
@@ -32,7 +32,7 @@
         }
       },
       "credentials": {
-        "postgres": { "id": "eqtrPgCredential01", "name": "Equitar Postgres" }
+        "postgres": { "id": "prtPgCredential01", "name": "Prontu Postgres" }
       }
     },
     {

@@ -23,12 +23,6 @@ const startDateInput = document.getElementById('startDate');
 const endDateInput = document.getElementById('endDate');
 const submitBtn = filterForm.querySelector('button[type="submit"]');
 
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text ?? '';
-    return div.innerHTML;
-}
-
 function getTipoConfig(tipo) {
     return tipoConfig[tipo] || tipoConfig['Evolução'];
 }
@@ -137,7 +131,7 @@ async function loadRelatorios(filters = {}) {
         container.classList.remove('hidden');
         container.innerHTML = `
             <div class="bg-white rounded-xl shadow-sm border border-red-200 p-6 text-center">
-                <p class="text-red-700 text-sm font-medium">${error.message || 'Não foi possível carregar os prontuários.'}</p>
+                <p class="text-red-700 text-sm font-medium">${escapeHtml(error.message || 'Não foi possível carregar os prontuários.')}</p>
             </div>
         `;
         countBadge.textContent = '0';

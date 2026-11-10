@@ -6,7 +6,7 @@
 -- nenhuma ligação com o usuário logado. Esses 3 continuam existindo como
 -- padrão da clínica; isto aqui é a lista adicional, pessoal, de cada um.
 --
--- Rodar com: psql -U equitar_user -d equitar_db -f 004_modelos_evolucao.sql
+-- Rodar com: psql -U prontu_user -d prontu_db -f 004_modelos_evolucao.sql
 CREATE TABLE modelos_evolucao (
     id SERIAL PRIMARY KEY,
     usuario_id INTEGER NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,

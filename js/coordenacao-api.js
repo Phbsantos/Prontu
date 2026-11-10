@@ -3,7 +3,7 @@ const CoordenacaoApi = {
     // Plano_Saude vive em Pacientes, não em Atendimentos nem Relatorios —
     // por isso todo fetch abaixo também busca /listar/pacientes pra montar
     // o cruzamento. Ver decisão registrada no esquema da base ("Base
-    // Equitar"): o plano fica no paciente, não no atendimento.
+    // Prontu"): o plano fica no paciente, não no atendimento.
     //
     // 2026-09-08: backend novo — o cruzamento agora é por paciente_id
     // (inteiro real, vindo de FK) em vez de por nome normalizado em

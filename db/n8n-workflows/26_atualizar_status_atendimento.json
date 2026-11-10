@@ -1,6 +1,6 @@
 {
-  "id": "eqtr26AtualizarStatusAtendimento",
-  "name": "Equitar - POST /atualizar/status-atendimento",
+  "id": "prt26AtualizarStatusAtendimento",
+  "name": "Prontu - POST /atualizar/status-atendimento",
   "active": true,
   "nodes": [
     {
@@ -32,7 +32,7 @@
         }
       },
       "credentials": {
-        "postgres": { "id": "eqtrPgCredential01", "name": "Equitar Postgres" }
+        "postgres": { "id": "prtPgCredential01", "name": "Prontu Postgres" }
       }
     },
     {

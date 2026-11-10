@@ -1,7 +1,7 @@
 // Cadastro de Recorrência semanal — aba "Nova Recorrência" em cadastros.html.
 //
 // 2026-09-17: ativada de verdade contra o backend (era session-only desde
-// 2026-09-01 — ver equitar-feature-state). Agora: /registrar/recorrencia
+// 2026-09-01 — ver prontu-feature-state). Agora: /registrar/recorrencia
 // grava a recorrência em si (paciente/terapeuta/horário/dias da semana/
 // período), e em seguida CadastroApi.criarAtendimento é chamado uma vez
 // por data calculada (a mesma lógica de calcularDatasGeracao de antes),

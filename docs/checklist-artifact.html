@@ -1,4 +1,4 @@
-<title>Equitar QA</title>
+<title>Prontu QA</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
@@ -422,7 +422,7 @@
 <div class="wrap">
   <div class="topbar">
     <p class="eyebrow">Migração Postgres + n8n · VPS</p>
-    <h1>Checklist de testes — Equitar</h1>
+    <h1>Checklist de testes — Prontu</h1>
     <p class="subhead">Validação manual do app de verdade no navegador, contra <code>https://38-72-132-152.sslip.io</code>. Cada endpoint já foi testado por curl durante a migração — esta lista cobre o fluxo de usuário real.</p>
     <div class="progress-row">
       <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
@@ -451,20 +451,20 @@
 
 <script>
   const CREDENTIALS = [
-    { email: 'fernanda.duarte@equitar.com.br', role: 'Terapeuta', detail: 'Fonoaudiologia · Equipe Manhã' },
-    { email: 'rafael.nogueira@equitar.com.br', role: 'Terapeuta', detail: 'Psicologia · Equipe Manhã' },
-    { email: 'camila.alves@equitar.com.br', role: 'Supervisor', detail: 'Terapia Ocupacional · Equipe Manhã' },
-    { email: 'bruno.castro@equitar.com.br', role: 'Terapeuta', detail: 'Psicomotricidade · Equipe Tarde' },
-    { email: 'juliana.prado@equitar.com.br', role: 'Supervisor', detail: 'Fonoaudiologia · Equipe Tarde' },
-    { email: 'marcos.teixeira@equitar.com.br', role: 'Coordenador', detail: '' },
-    { email: 'ana.lima@equitar.com.br', role: 'Admin', detail: '' },
+    { email: 'fernanda.duarte@exemplo.com.br', role: 'Terapeuta', detail: 'Fonoaudiologia · Equipe Manhã' },
+    { email: 'rafael.nogueira@exemplo.com.br', role: 'Terapeuta', detail: 'Psicologia · Equipe Manhã' },
+    { email: 'camila.alves@exemplo.com.br', role: 'Supervisor', detail: 'Terapia Ocupacional · Equipe Manhã' },
+    { email: 'bruno.castro@exemplo.com.br', role: 'Terapeuta', detail: 'Psicomotricidade · Equipe Tarde' },
+    { email: 'juliana.prado@exemplo.com.br', role: 'Supervisor', detail: 'Fonoaudiologia · Equipe Tarde' },
+    { email: 'marcos.teixeira@exemplo.com.br', role: 'Coordenador', detail: '' },
+    { email: 'ana.lima@exemplo.com.br', role: 'Admin', detail: '' },
   ];
 
   const SECTIONS = [
     {
       title: 'Login e sessão',
       items: [
-        'Login com e-mail/senha corretos (<strong>fernanda.duarte@equitar.com.br</strong> / trocar123) — entra e vai pra tela certa (Terapeuta → index.html).',
+        'Login com e-mail/senha corretos (<strong>fernanda.duarte@exemplo.com.br</strong> / trocar123) — entra e vai pra tela certa (Terapeuta → index.html).',
         'Login com senha errada — mensagem de erro clara, não trava a tela.',
         'Login com e-mail que não existe — mesma mensagem de erro (não deve dizer "e-mail não encontrado" especificamente).',
         'Depois de logado, dá refresh (F5) — continua logado (sessão não se perde).',
@@ -564,7 +564,7 @@
     },
   ];
 
-  const STORAGE_KEY = 'equitar-qa-checklist-v1';
+  const STORAGE_KEY = 'prontu-qa-checklist-v1';
 
   function loadState() {
     try {

@@ -1,6 +1,6 @@
 {
-  "id": "eqtr04ListarAtendimentos",
-  "name": "Equitar - GET /listar/atendimentos",
+  "id": "prt04ListarAtendimentos",
+  "name": "Prontu - GET /listar/atendimentos",
   "active": true,
   "nodes": [
     {
@@ -32,7 +32,7 @@
         }
       },
       "credentials": {
-        "postgres": { "id": "eqtrPgCredential01", "name": "Equitar Postgres" }
+        "postgres": { "id": "prtPgCredential01", "name": "Prontu Postgres" }
       }
     },
     {

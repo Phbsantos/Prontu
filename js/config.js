@@ -37,7 +37,7 @@ const CONFIG = {
         LISTAR_RELATORIOS: '/listar/relatorios',
         LISTAR_EQUIPES: '/listar/equipes',
         // 2026-09-17: endpoints novos — Recorrência agora é tabela de
-        // verdade (era session-only, ver equitar-feature-state), e Planos/
+        // verdade (era session-only, ver prontu-feature-state), e Planos/
         // Especialidades ganharam listagem própria (antes só existiam via
         // seed, sem nenhum jeito de consultar/cadastrar pela API).
         LISTAR_RECORRENCIAS: '/listar/recorrencias',

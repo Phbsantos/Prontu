@@ -1,6 +1,6 @@
 {
-  "id": "eqtr21EditarRelatorio",
-  "name": "Equitar - POST /editar/relatorio",
+  "id": "prt21EditarRelatorio",
+  "name": "Prontu - POST /editar/relatorio",
   "active": true,
   "nodes": [
     {
@@ -32,7 +32,7 @@
         }
       },
       "credentials": {
-        "postgres": { "id": "eqtrPgCredential01", "name": "Equitar Postgres" }
+        "postgres": { "id": "prtPgCredential01", "name": "Prontu Postgres" }
       }
     },
     {

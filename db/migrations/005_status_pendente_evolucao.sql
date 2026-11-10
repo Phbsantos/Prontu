@@ -13,5 +13,5 @@
 --
 -- ALTER TYPE ... ADD VALUE não pode rodar dentro do mesmo bloco de
 -- transação que usa o valor novo -- precisa ser sua própria execução.
--- Rodar com: psql -U equitar_user -d equitar_db -f 005_status_pendente_evolucao.sql
+-- Rodar com: psql -U prontu_user -d prontu_db -f 005_status_pendente_evolucao.sql
 ALTER TYPE status_presenca ADD VALUE IF NOT EXISTS 'Pendente de Evolução';

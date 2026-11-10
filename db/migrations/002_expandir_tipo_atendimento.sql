@@ -19,7 +19,7 @@
 -- transação que já usa o valor novo, mas como statement solo via
 -- psql -f (autocommit) não tem problema nenhum.
 --
--- Rodar com: psql -U equitar_user -d equitar_db -f 002_expandir_tipo_atendimento.sql
+-- Rodar com: psql -U prontu_user -d prontu_db -f 002_expandir_tipo_atendimento.sql
 
 ALTER TYPE tipo_atendimento ADD VALUE IF NOT EXISTS 'Sessão Extra/Reforço';
 ALTER TYPE tipo_atendimento ADD VALUE IF NOT EXISTS 'Acolhimento Familiar';

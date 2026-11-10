@@ -1,6 +1,6 @@
 {
-  "id": "eqtr15ListarEspecialidades",
-  "name": "Equitar - GET /listar/especialidades",
+  "id": "prt15ListarEspecialidades",
+  "name": "Prontu - GET /listar/especialidades",
   "active": true,
   "nodes": [
     {
@@ -30,7 +30,7 @@
         "options": {}
       },
       "credentials": {
-        "postgres": { "id": "eqtrPgCredential01", "name": "Equitar Postgres" }
+        "postgres": { "id": "prtPgCredential01", "name": "Prontu Postgres" }
       }
     },
     {

@@ -1,6 +1,6 @@
 {
-  "id": "eqtr13ListarPlanos",
-  "name": "Equitar - GET /listar/planos",
+  "id": "prt13ListarPlanos",
+  "name": "Prontu - GET /listar/planos",
   "active": true,
   "nodes": [
     {
@@ -30,7 +30,7 @@
         "options": {}
       },
       "credentials": {
-        "postgres": { "id": "eqtrPgCredential01", "name": "Equitar Postgres" }
+        "postgres": { "id": "prtPgCredential01", "name": "Prontu Postgres" }
       }
     },
     {

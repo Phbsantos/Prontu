@@ -5,3 +5,7 @@ db/n8n-workflows/_reference/credential_postgres.json
 db/n8n-workflows/_reference/credential_*.local.json
 *.env
 .env.local
+
+# Diretrizes locais do Claude Code — não versionar.
+CLAUDE.md
+.claude/rules/

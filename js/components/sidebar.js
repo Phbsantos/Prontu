@@ -31,7 +31,7 @@ const Sidebar = {
         { href: 'usuarios.html', label: 'Usuários', icon: 'users-round' },
     ],
 
-    COLLAPSE_KEY: 'equitar_sidebar_collapsed',
+    COLLAPSE_KEY: 'prontu_sidebar_collapsed',
     _containerId: null,
     _activeHref: null,
     _mediaQueryBound: false,
@@ -102,7 +102,7 @@ const Sidebar = {
                     <div class="sidebar-logo-mark">
                         <i data-lucide="heart-pulse" class="w-5 h-5"></i>
                     </div>
-                    <span class="sidebar-logo-word">Equitar</span>
+                    <span class="sidebar-logo-word">Prontu</span>
                 </div>
 
                 <button

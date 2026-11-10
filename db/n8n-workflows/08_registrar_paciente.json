@@ -1,6 +1,6 @@
 {
-  "id": "eqtr08RegistrarPaciente",
-  "name": "Equitar - POST /registrar/paciente",
+  "id": "prt08RegistrarPaciente",
+  "name": "Prontu - POST /registrar/paciente",
   "active": true,
   "nodes": [
     {
@@ -32,7 +32,7 @@
         }
       },
       "credentials": {
-        "postgres": { "id": "eqtrPgCredential01", "name": "Equitar Postgres" }
+        "postgres": { "id": "prtPgCredential01", "name": "Prontu Postgres" }
       }
     },
     {

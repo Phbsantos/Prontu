@@ -1,6 +1,6 @@
 {
-  "id": "eqtr22ConfirmarCienciaRelatorio",
-  "name": "Equitar - POST /relatorio/ciencia",
+  "id": "prt22ConfirmarCienciaRelatorio",
+  "name": "Prontu - POST /relatorio/ciencia",
   "active": true,
   "nodes": [
     {
@@ -32,7 +32,7 @@
         }
       },
       "credentials": {
-        "postgres": { "id": "eqtrPgCredential01", "name": "Equitar Postgres" }
+        "postgres": { "id": "prtPgCredential01", "name": "Prontu Postgres" }
       }
     },
     {

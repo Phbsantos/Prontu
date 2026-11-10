@@ -4,7 +4,7 @@
   "requests": [
     {
       "nome": "Fernanda Duarte",
-      "email": "fernanda.duarte@equitar.com.br",
+      "email": "fernanda.duarte@exemplo.com.br",
       "senha": "trocar123",
       "perfil_role": "Terapeuta",
       "especialidade": "Fonoaudiologia",
@@ -14,7 +14,7 @@
     },
     {
       "nome": "Rafael Nogueira",
-      "email": "rafael.nogueira@equitar.com.br",
+      "email": "rafael.nogueira@exemplo.com.br",
       "senha": "trocar123",
       "perfil_role": "Terapeuta",
       "especialidade": "Psicologia",
@@ -24,7 +24,7 @@
     },
     {
       "nome": "Camila Alves",
-      "email": "camila.alves@equitar.com.br",
+      "email": "camila.alves@exemplo.com.br",
       "senha": "trocar123",
       "perfil_role": "Supervisor",
       "especialidade": "Terapia Ocupacional",
@@ -34,7 +34,7 @@
     },
     {
       "nome": "Bruno Castro",
-      "email": "bruno.castro@equitar.com.br",
+      "email": "bruno.castro@exemplo.com.br",
       "senha": "trocar123",
       "perfil_role": "Terapeuta",
       "especialidade": "Psicomotricidade",
@@ -44,7 +44,7 @@
     },
     {
       "nome": "Juliana Prado",
-      "email": "juliana.prado@equitar.com.br",
+      "email": "juliana.prado@exemplo.com.br",
       "senha": "trocar123",
       "perfil_role": "Supervisor",
       "especialidade": "Fonoaudiologia",
@@ -54,7 +54,7 @@
     },
     {
       "nome": "Marcos Teixeira",
-      "email": "marcos.teixeira@equitar.com.br",
+      "email": "marcos.teixeira@exemplo.com.br",
       "senha": "trocar123",
       "perfil_role": "Coordenador",
       "especialidade": null,
@@ -64,7 +64,7 @@
     },
     {
       "nome": "Ana Beatriz Lima",
-      "email": "ana.lima@equitar.com.br",
+      "email": "ana.lima@exemplo.com.br",
       "senha": "trocar123",
       "perfil_role": "Admin",
       "especialidade": null,

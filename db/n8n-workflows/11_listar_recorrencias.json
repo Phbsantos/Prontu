@@ -1,6 +1,6 @@
 {
-  "id": "eqtr11ListarRecorrencias",
-  "name": "Equitar - GET /listar/recorrencias",
+  "id": "prt11ListarRecorrencias",
+  "name": "Prontu - GET /listar/recorrencias",
   "active": true,
   "nodes": [
     {
@@ -32,7 +32,7 @@
         }
       },
       "credentials": {
-        "postgres": { "id": "eqtrPgCredential01", "name": "Equitar Postgres" }
+        "postgres": { "id": "prtPgCredential01", "name": "Prontu Postgres" }
       }
     },
     {

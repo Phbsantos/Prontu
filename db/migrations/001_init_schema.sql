@@ -1,5 +1,5 @@
 -- 001_init_schema.sql
--- Schema inicial da Equitar em Postgres, substituindo o Airtable.
+-- Schema inicial do Prontu em Postgres, substituindo o Airtable.
 -- Redesenhado do zero (não é migração 1:1) pra corrigir os problemas
 -- encontrados na base antiga:
 --   - links resolvidos por nome (Paciente_Nome/Terapeuta_Nome etc.) viram
@@ -28,7 +28,7 @@
 -- Chaves primárias: SERIAL (inteiro autoincremento) — escala da clínica não
 -- justifica UUID, e é mais fácil de inspecionar manualmente em dev.
 --
--- Rodar com: psql -U equitar_user -d equitar_db -f 001_init_schema.sql
+-- Rodar com: psql -U prontu_user -d prontu_db -f 001_init_schema.sql
 
 -- -----------------------------------------------------------------------
 -- Função utilitária: mantém updated_at sempre atual em qualquer UPDATE.

@@ -1,6 +1,6 @@
 {
-  "id": "eqtr12RegistrarRecorrencia",
-  "name": "Equitar - POST /registrar/recorrencia",
+  "id": "prt12RegistrarRecorrencia",
+  "name": "Prontu - POST /registrar/recorrencia",
   "active": true,
   "nodes": [
     {
@@ -26,13 +26,13 @@
       "parameters": {
         "resource": "database",
         "operation": "executeQuery",
-        "query": "-- Primeira vez que Recorrencia grava de verdade no backend (antes era só\n-- sessionStorage, sem tabela nem endpoint -- ver equitar-feature-state).\n-- Uma única query: CTE 1 insere a recorrência, CTE 2 insere os dias da\n-- semana (unnest do array $8) linkados ao id que acabou de ser gerado,\n-- e o SELECT final agrega os dias de volta numa linha só de resposta.\nWITH nova_recorrencia AS (\n  INSERT INTO recorrencias (paciente_id, terapeuta_id, horario, duracao_minutos, data_inicio, data_fim, status)\n  VALUES (\n    (SELECT id FROM pacientes WHERE nome_completo = $1),\n    (SELECT id FROM usuarios WHERE nome = $2),\n    $3::time,\n    COALESCE($4::int, 30),\n    $5::date,\n    NULLIF($6, '')::date,\n    COALESCE($7::recorrencia_status, 'Ativa')\n  )\n  RETURNING id, paciente_id, terapeuta_id, horario::text AS horario, duracao_minutos, data_inicio, data_fim, status::text AS status\n),\ndias_inseridos AS (\n  INSERT INTO recorrencia_dias (recorrencia_id, dia_semana)\n  SELECT nova_recorrencia.id, d::dia_semana\n  FROM nova_recorrencia, unnest($8::text[]) AS d\n  RETURNING dia_semana::text AS dia_semana\n)\nSELECT nr.*, (SELECT array_agg(dia_semana) FROM dias_inseridos) AS dias_semana\nFROM nova_recorrencia nr",
+        "query": "-- Primeira vez que Recorrencia grava de verdade no backend (antes era só\n-- sessionStorage, sem tabela nem endpoint -- ver prontu-feature-state).\n-- Uma única query: CTE 1 insere a recorrência, CTE 2 insere os dias da\n-- semana (unnest do array $8) linkados ao id que acabou de ser gerado,\n-- e o SELECT final agrega os dias de volta numa linha só de resposta.\nWITH nova_recorrencia AS (\n  INSERT INTO recorrencias (paciente_id, terapeuta_id, horario, duracao_minutos, data_inicio, data_fim, status)\n  VALUES (\n    (SELECT id FROM pacientes WHERE nome_completo = $1),\n    (SELECT id FROM usuarios WHERE nome = $2),\n    $3::time,\n    COALESCE($4::int, 30),\n    $5::date,\n    NULLIF($6, '')::date,\n    COALESCE($7::recorrencia_status, 'Ativa')\n  )\n  RETURNING id, paciente_id, terapeuta_id, horario::text AS horario, duracao_minutos, data_inicio, data_fim, status::text AS status\n),\ndias_inseridos AS (\n  INSERT INTO recorrencia_dias (recorrencia_id, dia_semana)\n  SELECT nova_recorrencia.id, d::dia_semana\n  FROM nova_recorrencia, unnest($8::text[]) AS d\n  RETURNING dia_semana::text AS dia_semana\n)\nSELECT nr.*, (SELECT array_agg(dia_semana) FROM dias_inseridos) AS dias_semana\nFROM nova_recorrencia nr",
         "options": {
           "queryReplacement": "={{ [ $json.body.paciente_nome, $json.body.terapeuta_nome, $json.body.horario, $json.body.duracao_minutos || null, $json.body.data_inicio, $json.body.data_fim || '', $json.body.status || null, $json.body.dias_semana ] }}"
         }
       },
       "credentials": {
-        "postgres": { "id": "eqtrPgCredential01", "name": "Equitar Postgres" }
+        "postgres": { "id": "prtPgCredential01", "name": "Prontu Postgres" }
       }
     },
     {

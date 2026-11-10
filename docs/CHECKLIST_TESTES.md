@@ -1,21 +1,21 @@
-# Checklist de testes manuais — Equitar contra o backend novo (VPS)
+# Checklist de testes manuais — Prontu contra o backend novo (VPS)
 
 Backend em `https://38-72-132-152.sslip.io` (HTTPS via Caddy). Testado por curl endpoint a endpoint durante a migração — esta lista é pra validar o **app de verdade**, no navegador, com fluxo de usuário real. Marque cada item conforme for testando; qualquer coisa que falhar, anota o que apareceu (mensagem de erro, console do navegador) antes de reportar.
 
 Usuários de teste disponíveis (senha de todos: `trocar123`):
-- `fernanda.duarte@equitar.com.br` — Terapeuta (Fonoaudiologia, Equipe Manhã)
-- `rafael.nogueira@equitar.com.br` — Terapeuta (Psicologia, Equipe Manhã)
-- `camila.alves@equitar.com.br` — Supervisor (Terapia Ocupacional, Equipe Manhã)
-- `bruno.castro@equitar.com.br` — Terapeuta (Psicomotricidade, Equipe Tarde)
-- `juliana.prado@equitar.com.br` — Supervisor (Fonoaudiologia, Equipe Tarde)
-- `marcos.teixeira@equitar.com.br` — Coordenador
-- `ana.lima@equitar.com.br` — Admin
+- `fernanda.duarte@exemplo.com.br` — Terapeuta (Fonoaudiologia, Equipe Manhã)
+- `rafael.nogueira@exemplo.com.br` — Terapeuta (Psicologia, Equipe Manhã)
+- `camila.alves@exemplo.com.br` — Supervisor (Terapia Ocupacional, Equipe Manhã)
+- `bruno.castro@exemplo.com.br` — Terapeuta (Psicomotricidade, Equipe Tarde)
+- `juliana.prado@exemplo.com.br` — Supervisor (Fonoaudiologia, Equipe Tarde)
+- `marcos.teixeira@exemplo.com.br` — Coordenador
+- `ana.lima@exemplo.com.br` — Admin
 
 ---
 
 ## 1. Login e sessão
 
-- [ ] Login com e-mail/senha corretos (`fernanda.duarte@equitar.com.br` / `trocar123`) — entra e vai pra tela certa (Terapeuta → `index.html`).
+- [ ] Login com e-mail/senha corretos (`fernanda.duarte@exemplo.com.br` / `trocar123`) — entra e vai pra tela certa (Terapeuta → `index.html`).
 - [ ] Login com senha errada — mensagem de erro clara, não trava a tela.
 - [ ] Login com e-mail que não existe — mesma mensagem de erro (não deve dizer "e-mail não encontrado" especificamente).
 - [ ] Depois de logado, dá refresh (F5) — continua logado (sessão não se perde).

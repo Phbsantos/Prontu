@@ -1,0 +1,8 @@
+{
+  "name": "prontu",
+  "private": true,
+  "description": "Sem dependencias: os testes usam apenas o node:test nativo (Node 20+).",
+  "scripts": {
+    "test": "node --test \"tests/*.test.js\""
+  }
+}

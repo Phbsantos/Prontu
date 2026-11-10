@@ -32,12 +32,6 @@ const DEFAULT_TEMPLATES = [
     },
 ];
 
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text ?? '';
-    return div.innerHTML;
-}
-
 function getSelectedDate() {
     return document.getElementById('selected-date').value;
 }
@@ -200,8 +194,8 @@ function renderPatientList(searchTerm = '') {
                             ${initials || 'P'}
                         </div>
                         <div class="min-w-0">
-                            <h4 class="font-bold text-slate-900 text-xs sm:text-sm leading-snug truncate">${p.name}</h4>
-                            <p class="text-[11px] text-slate-500">${p.time}${p.age ? ` • ${p.age}` : ''}</p>
+                            <h4 class="font-bold text-slate-900 text-xs sm:text-sm leading-snug truncate">${escapeHtml(p.name)}</h4>
+                            <p class="text-[11px] text-slate-500">${escapeHtml(p.time)}${p.age ? ` • ${escapeHtml(p.age)}` : ''}</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-2 shrink-0">
@@ -412,7 +406,7 @@ function insertTemplate(type) {
 // os outros usuários nem outros dispositivos do mesmo usuário.
 function getModelosPadraoStorageKey() {
     const session = AuthApi.getSession();
-    return `equitar_modelos_padrao_ocultos_${(session && session.id) || 'anon'}`;
+    return `prontu_modelos_padrao_ocultos_${(session && session.id) || 'anon'}`;
 }
 
 function getModelosPadraoOcultos() {
@@ -814,13 +808,13 @@ function renderTimeline(container, timeline) {
         entry.className = `relative ${index < timeline.length - 1 ? 'mb-4' : ''}`;
 
         const detailText = isRealizado
-            ? item.notes || 'Sem relato registrado.'
-            : `Justificativa: ${item.justification || 'não informada'}`;
+            ? escapeHtml(item.notes || 'Sem relato registrado.')
+            : `Justificativa: ${escapeHtml(item.justification || 'não informada')}`;
 
         const extraDetails = isRealizado
             ? `
-                ${item.engagement ? `<p class="mt-2 text-[11px] text-slate-400">Engajamento: ${ApiService.engagementLabels[item.engagement] || item.engagement}</p>` : ''}
-                ${item.nextSteps ? `<p class="mt-1 text-[11px] text-slate-400">Próximos passos: ${item.nextSteps}</p>` : ''}
+                ${item.engagement ? `<p class="mt-2 text-[11px] text-slate-400">Engajamento: ${escapeHtml(ApiService.engagementLabels[item.engagement] || item.engagement)}</p>` : ''}
+                ${item.nextSteps ? `<p class="mt-1 text-[11px] text-slate-400">Próximos passos: ${escapeHtml(item.nextSteps)}</p>` : ''}
             `
             : '';
 
@@ -836,8 +830,8 @@ function renderTimeline(container, timeline) {
                 </div>
                 <div class="mt-1.5 flex items-center justify-between gap-2">
                     <p class="text-xs text-slate-600">
-                        <span class="font-semibold">${item.tipoAtendimento || 'Atendimento'}</span>
-                        · ${item.therapistName || 'Terapeuta não informado'}
+                        <span class="font-semibold">${escapeHtml(item.tipoAtendimento || 'Atendimento')}</span>
+                        · ${escapeHtml(item.therapistName || 'Terapeuta não informado')}
                     </p>
                     <i data-lucide="chevron-down" class="chevron w-4 h-4 text-slate-400 transition-transform shrink-0"></i>
                 </div>
@@ -927,9 +921,9 @@ function renderPendentesAnterioresLista(container, lista) {
         row.className = 'flex items-center justify-between gap-3 border border-slate-200 rounded-xl p-3 bg-slate-50/50';
         row.innerHTML = `
             <div class="min-w-0">
-                <p class="text-sm font-bold text-slate-800 truncate">${item.name}</p>
+                <p class="text-sm font-bold text-slate-800 truncate">${escapeHtml(item.name)}</p>
                 <p class="text-xs text-slate-500">
-                    ${ApiService.formatDate(item.dataHora)} às ${item.time} · ${item.tipoAtendimento || 'Atendimento'}
+                    ${ApiService.formatDate(item.dataHora)} às ${escapeHtml(item.time)} · ${escapeHtml(item.tipoAtendimento || 'Atendimento')}
                 </p>
             </div>
             <button type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-amber-300 text-amber-700 text-xs font-semibold hover:bg-amber-50 transition shrink-0">
@@ -1050,7 +1044,7 @@ function showToast(message, type = 'info') {
     toast.className = `flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-lg text-xs font-semibold ${bgClass} transition-all duration-300 pointer-events-auto transform translate-y-2 opacity-0`;
     toast.innerHTML = `
         <i data-lucide="${icon}" class="w-4 h-4 shrink-0"></i>
-        <span>${message}</span>
+        <span>${escapeHtml(message)}</span>
     `;
 
     container.appendChild(toast);
