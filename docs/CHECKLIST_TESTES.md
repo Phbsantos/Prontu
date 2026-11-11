@@ -44,6 +44,7 @@ Usuários de teste disponíveis (senha de todos: `trocar123`):
 ### Recorrência — **ativada de verdade nesta rodada, teste com atenção**
 - [ ] Preencher o formulário (paciente, terapeuta, dias da semana, horário, duração, data de início, semanas) e salvar.
 - [ ] Toast de sucesso mostra quantos atendimentos foram gerados.
+- [ ] A aba de recorrência **não** mostra o aviso amarelo antigo ("guardado só nesta sessão do navegador / Airtable"): removido em 2026-11-11, pois a recorrência grava no backend.
 - [ ] A recorrência aparece na lista abaixo do formulário, com os dias/horário certos.
 - [ ] A recorrência aparece como bloco na grade semanal, no dia/horário certo.
 - [ ] **Importante**: conferir que os atendimentos de verdade foram criados — abrir a agenda do terapeuta escolhido (ou o painel de Coordenação) e confirmar que aparecem os atendimentos futuros gerados pela recorrência, nas datas certas.

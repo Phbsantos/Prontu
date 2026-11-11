@@ -264,14 +264,9 @@
                     correspondentes na agenda pelas próximas semanas. Clique num horário livre na grade pra
                     pré-preencher o formulário.
                 </p>
-                <div class="flex items-start gap-2 p-3 rounded-xl text-xs mb-5" style="background:var(--warn-soft); color:var(--warn-ink)">
-                    <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5"></i>
-                    <span>
-                        Por decisão atual, a recorrência e os atendimentos previstos por ela ficam guardados só
-                        nesta sessão do navegador — nada é enviado à agenda/Airtable ainda. Quando isso for
-                        ativado de verdade, é só trocar essa geração local pela chamada real ao endpoint.
-                    </span>
-                </div>
+                <!-- 2026-11-11: removido o aviso "guardado só nesta sessão do navegador / Airtable".
+                     Era do período em que a recorrência rodava em sessionStorage; desde 2026-09-17 ela
+                     grava no backend (/registrar/recorrencia) e gera os atendimentos de verdade. -->
 
                 <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_22rem] gap-6">
                     <div>

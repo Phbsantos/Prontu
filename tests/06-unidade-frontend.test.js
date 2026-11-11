@@ -125,3 +125,11 @@ test('listagens GET não chamam response.json() direto (quebra com corpo vazio)'
     }
     assert.deepEqual(ruins, []);
 });
+
+// 2026-11-11: a recorrência grava no backend desde 2026-09-17; o aviso antigo ("só nesta sessão do navegador",
+// "Airtable") ficou desatualizado e aparecia na tela.
+test('cadastros.html não exibe o aviso antigo de recorrência "só nesta sessão" nem cita Airtable na UI', () => {
+    const html = h.read('cadastros.html').replace(/<!--[\s\S]*?-->/g, '');
+    assert.doesNotMatch(html, /só\s+nesta sessão do navegador/);
+    assert.doesNotMatch(html, /Airtable/i);
+});
