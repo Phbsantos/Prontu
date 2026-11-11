@@ -237,11 +237,62 @@ test('[MÉDIO] CDNs com versão fixa e SRI (integrity + crossorigin)', () => {
     }
 });
 
-test('[MÉDIO] páginas definem Content-Security-Policy',
-    { todo: 'Nenhuma página tem CSP; com Tailwind CDN e scripts inline será preciso uma política gradual.' },
-    () => {
-        for (const p of h.paginasHtml()) assert.match(h.read(p), /Content-Security-Policy/, p);
-    });
+// 2026-11-11: CSP por meta tag (o Vercel não tem vercel.json; quando tiver, mover para header e acrescentar frame-ancestors).
+function cspDaPagina(html) {
+    const m = html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)"/);
+    if (!m) return null;
+    const dir = {};
+    for (const parte of m[1].split(';').map((x) => x.trim()).filter(Boolean)) {
+        const [nome, ...fontes] = parte.split(/\s+/);
+        dir[nome] = fontes;
+    }
+    return { bruto: m[1], dir };
+}
+
+test('[MÉDIO] toda página define a mesma Content-Security-Policy, antes de qualquer script', () => {
+    const brutos = new Set();
+    for (const p of h.paginasHtml()) {
+        const html = h.read(p);
+        const csp = cspDaPagina(html);
+        assert.ok(csp, `${p}: sem meta Content-Security-Policy`);
+        brutos.add(csp.bruto);
+        assert.ok(html.indexOf('Content-Security-Policy') < html.indexOf('<script'), `${p}: CSP precisa vir antes do primeiro <script>`);
+    }
+    assert.equal(brutos.size, 1, 'as páginas devem ter exatamente a mesma política');
+});
+
+test('[MÉDIO] CSP é restritiva: default-src self, sem curinga, object-src none, base-uri/form-action self', () => {
+    const { dir } = cspDaPagina(h.read('login.html'));
+    assert.deepEqual(Array.from(dir['default-src']), ["'self'"]);
+    assert.deepEqual(Array.from(dir['object-src']), ["'none'"]);
+    assert.deepEqual(Array.from(dir['base-uri']), ["'self'"]);
+    assert.deepEqual(Array.from(dir['form-action']), ["'self'"]);
+    for (const [nome, fontes] of Object.entries(dir)) {
+        assert.ok(!fontes.includes('*') && !fontes.includes('http:') && !fontes.includes('https:'), `${nome}: curinga/esquema aberto`);
+        assert.ok(!fontes.includes("'unsafe-eval'"), `${nome}: unsafe-eval`);
+    }
+    // Dívida conhecida: onclick inline e <script> inline exigem 'unsafe-inline' no script-src.
+    assert.ok(dir['script-src'].includes("'unsafe-inline'"));
+});
+
+test('[MÉDIO] connect-src libera só a API do config.js (CSP e API_BASE andam juntos)', () => {
+    const { dir } = cspDaPagina(h.read('login.html'));
+    const origemApi = new URL(h.carregarConfig().API_BASE).origin;
+    assert.deepEqual(Array.from(dir['connect-src']), ["'self'", origemApi]);
+});
+
+test('[MÉDIO] todo host externo carregado por página está liberado na CSP e nada sobra', () => {
+    const { dir } = cspDaPagina(h.read('login.html'));
+    const liberados = new Set(Object.values(dir).flat().filter((f) => /^https:\/\//.test(f)));
+    const usados = new Set();
+    for (const p of h.paginasHtml()) {
+        for (const m of h.read(p).matchAll(/(?:src|href)="(https:\/\/[^"/]+)/g)) usados.add(m[1]);
+    }
+    // O Phosphor (relatorios.html) injeta CSS e fontes do próprio unpkg.com, que já é usado como script.
+    const origemApi = new URL(h.carregarConfig().API_BASE).origin;
+    for (const u of usados) assert.ok(liberados.has(u), `${u} é carregado mas não está na CSP`);
+    for (const l of liberados) assert.ok(usados.has(l) || l === origemApi, `${l} está na CSP mas nenhuma página usa`);
+});
 
 test('[MÉDIO] documentação não expõe senha de usuário (inclusive Admin) do backend da VPS',
     { todo: 'docs/CHECKLIST_TESTES.md lista e-mails + senha "trocar123" (inclui Admin) contra a VPS; se o seed 001 rodou em produção, são credenciais conhecidas.' },

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 2026-11-11: CSP por meta tag (o Vercel ainda não tem vercel.json, que permitiria frame-ancestors). 'unsafe-inline' é necessário pelos onclick/scripts inline; ao mudar CDN ou API_BASE, ajuste aqui nas 8 páginas (tests/07 confere). -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://unpkg.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' https://38-72-132-152.sslip.io; object-src 'none'; base-uri 'self'; form-action 'self'">
     <title>Relatórios · Prontu</title>
 
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>

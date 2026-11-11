@@ -75,6 +75,7 @@ Usuários de teste disponíveis (senha de todos: `trocar123`):
 - [ ] Sidebar colapsa/expande no desktop e o estado persiste depois de F5.
 - [ ] Em tela estreita (celular/tablet, ≤900px), sidebar vira menu off-canvas com botão hambúrguer.
 - [ ] Trocar de tema (claro/escuro, se aplicável) funciona em todas as páginas.
+- [ ] **CSP (2026-11-11):** com o console aberto (F12), carregar cada tela e usar as ações principais (abrir modais, salvar, filtrar). Não pode aparecer nenhuma mensagem "Refused to load/connect… Content Security Policy". Ícones, fontes e estilo devem carregar normalmente. Se aparecer, anotar o host bloqueado e a tela.
 
 ---
 
