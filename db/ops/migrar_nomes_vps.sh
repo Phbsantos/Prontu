@@ -125,12 +125,12 @@ echo "== 5. Iniciar o n8n e importar credencial + workflows novos"
 run docker start "$N8N_CONTAINER"
 run docker cp "$CRED_FILE" "$N8N_CONTAINER:/tmp/credential_postgres.json"
 run docker exec "$N8N_CONTAINER" n8n import:credentials --input=/tmp/credential_postgres.json
-run docker exec "$N8N_CONTAINER" rm -f /tmp/credential_postgres.json
+run docker exec -u root "$N8N_CONTAINER" rm -f /tmp/credential_postgres.json
 for f in "$WF_DIR"/[0-9][0-9]_*.json; do
   base="$(basename "$f")"
   run docker cp "$f" "$N8N_CONTAINER:/tmp/$base"
   run docker exec "$N8N_CONTAINER" n8n import:workflow --input="/tmp/$base"
-  run docker exec "$N8N_CONTAINER" rm -f "/tmp/$base"
+  run docker exec -u root "$N8N_CONTAINER" rm -f "/tmp/$base"
 done
 
 echo "== 6. Publicar (instância exige activeVersionId; ver _reference/activate.sh)"

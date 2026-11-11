@@ -9,3 +9,7 @@ db/n8n-workflows/_reference/credential_*.local.json
 # Diretrizes locais do Claude Code — não versionar.
 CLAUDE.md
 .claude/rules/
+
+# Backups gerados por db/ops/migrar_nomes_vps.sh (contem dados de pacientes)
+backup_*/
+*.dump
