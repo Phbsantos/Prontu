@@ -41,7 +41,7 @@ async function fetchEquipesRaw() {
     const url = `${CONFIG.API_BASE}${CONFIG.ENDPOINTS.LISTAR_EQUIPES}`;
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Erro ao carregar equipes (${response.status})`);
-    const data = await response.json();
+    const data = await lerJsonLista(response);
     return Array.isArray(data) ? data : [];
 }
 

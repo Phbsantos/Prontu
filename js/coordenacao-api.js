@@ -18,7 +18,7 @@ const CoordenacaoApi = {
             throw new Error(`Erro ao carregar dados (${response.status})`);
         }
 
-        const data = await response.json();
+        const data = await lerJsonLista(response);
         return Array.isArray(data) ? data : [];
     },
 

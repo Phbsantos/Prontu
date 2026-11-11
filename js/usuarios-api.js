@@ -24,7 +24,7 @@ const UsuariosApi = {
             throw new Error(`Erro ao carregar usuários (${response.status})`);
         }
 
-        const data = await response.json();
+        const data = await lerJsonLista(response);
         const records = Array.isArray(data) ? data : [];
         return records.map((record) => this.transformUsuario(record));
     },

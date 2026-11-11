@@ -166,7 +166,7 @@ const CadastroApi = {
             throw new Error(`Erro ao carregar recorrências (${response.status})`);
         }
 
-        const data = await response.json();
+        const data = await lerJsonLista(response);
         const records = Array.isArray(data) ? data : [];
         return records.map((record) => this.transformRecorrencia(record));
     },
@@ -179,7 +179,7 @@ const CadastroApi = {
             throw new Error(`Erro ao carregar especialidades (${response.status})`);
         }
 
-        const data = await response.json();
+        const data = await lerJsonLista(response);
         return Array.isArray(data) ? data : [];
     },
 
@@ -209,7 +209,7 @@ const CadastroApi = {
             throw new Error(`Erro ao carregar sugestões (${response.status})`);
         }
 
-        const data = await response.json();
+        const data = await lerJsonLista(response);
         const records = Array.isArray(data) ? data : [];
         return records.map((record) => this.transformSugestao(record));
     },

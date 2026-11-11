@@ -29,6 +29,7 @@ Usuários de teste disponíveis (senha de todos: `trocar123`):
 - [ ] Fechar um atendimento "Agendado" como **Realizado** — preencher evolução, nível de engajamento, recomendação — salva e reflete na tela.
 - [ ] Fechar um atendimento como **Falta sem Aviso** ou **Desmarcado com Aviso** — confirmar que o status realmente muda pra isso (não vira "Realizado" à força — esse era o bug histórico, já confirmado corrigido por teste direto, mas vale ver na UI também).
 - [ ] Navegar entre dias na agenda — muda a lista corretamente.
+- [ ] Abrir a agenda de um dia **sem nenhum atendimento** (ex.: Ana Beatriz Lima, `ana.lima@exemplo.com.br`, Terapeuta, no dia de hoje) — mostra "Nenhum paciente encontrado" e **nenhum** toast vermelho de "Unexpected end of JSON input" (2026-11-11: o n8n responde corpo vazio quando a listagem não tem linhas).
 
 ## 3. Cadastros (`cadastros.html`)
 

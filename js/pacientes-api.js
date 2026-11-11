@@ -24,7 +24,7 @@ const PacientesApi = {
             throw new Error(`Erro ao carregar pacientes (${response.status})`);
         }
 
-        const data = await response.json();
+        const data = await lerJsonLista(response);
         const records = Array.isArray(data) ? data : [];
 
         return records

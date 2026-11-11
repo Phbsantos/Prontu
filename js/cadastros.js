@@ -141,7 +141,7 @@ async function loadEquipesOptions() {
         const response = await fetch(url);
         if (!response.ok) throw new Error(`Erro ao carregar equipes (${response.status})`);
 
-        const data = await response.json();
+        const data = await lerJsonLista(response);
         // 2026-09-08: /listar/equipes (backend novo) devolve nome_equipe
         // achatado, sem "fields" pra desembrulhar.
         const equipes = Array.isArray(data) ? data : [];

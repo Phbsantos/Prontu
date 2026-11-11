@@ -103,7 +103,7 @@ const ApiService = {
             throw new Error(`Erro ao carregar a linha do tempo (${response.status})`);
         }
 
-        const payload = await response.json();
+        const payload = await lerJsonLista(response);
         const records = Array.isArray(payload) ? payload : [];
 
         return records
@@ -143,7 +143,7 @@ const ApiService = {
             throw new Error(`Erro ao verificar atendimentos pendentes (${response.status})`);
         }
 
-        const payload = await response.json();
+        const payload = await lerJsonLista(response);
         const records = Array.isArray(payload) ? payload : [];
 
         return records
@@ -168,7 +168,7 @@ const ApiService = {
             throw new Error(`Erro ao verificar alterações em relatórios (${response.status})`);
         }
 
-        const payload = await response.json();
+        const payload = await lerJsonLista(response);
         const records = Array.isArray(payload) ? payload : [];
 
         return records
@@ -230,7 +230,7 @@ const ApiService = {
             throw new Error(`Erro ao carregar agenda (${response.status})`);
         }
 
-        const data = await response.json();
+        const data = await lerJsonLista(response);
         const records = Array.isArray(data) ? data : [];
 
         return records.map((record) => this.transformAtendimento(record)).sort((a, b) => new Date(a.dataHora) - new Date(b.dataHora));
@@ -287,7 +287,7 @@ const ApiService = {
             throw new Error(`Erro ao carregar modelos de evolução (${response.status})`);
         }
 
-        const data = await response.json();
+        const data = await lerJsonLista(response);
         const records = Array.isArray(data) ? data : [];
         return records.map((record) => ({ id: record.id, nome: record.nome, conteudo: record.conteudo }));
     },

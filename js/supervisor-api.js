@@ -75,7 +75,7 @@ const SupervisorApi = {
             throw new Error(`Erro ao carregar equipes (${response.status})`);
         }
 
-        const data = await response.json();
+        const data = await lerJsonLista(response);
         const equipes = Array.isArray(data) ? data : [];
 
         const equipe = equipes.find((e) => e.supervisor_id === supervisorId);
@@ -107,7 +107,7 @@ const SupervisorApi = {
             throw new Error(`Erro ao carregar agenda da equipe (${response.status})`);
         }
 
-        const data = await response.json();
+        const data = await lerJsonLista(response);
         const records = Array.isArray(data) ? data : [];
 
         return records

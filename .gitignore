@@ -13,3 +13,6 @@ CLAUDE.md
 # Backups gerados por db/ops/migrar_nomes_vps.sh (contem dados de pacientes)
 backup_*/
 *.dump
+
+# Lista local de pendencias
+docs/PENDENCIAS.md

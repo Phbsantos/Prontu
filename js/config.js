@@ -128,3 +128,14 @@ const CONFIG = {
         COORDENACAO_METRICAS: '/coordenacao/metricas',
     },
 };
+
+// 2026-11-11: o n8n responde 200 com corpo vazio quando a query de uma
+// listagem não devolve linhas (o node Postgres não emite item e o Respond
+// to Webhook nunca roda), e response.json() quebrava com "Unexpected end of
+// JSON input" (ex.: Minha Agenda num dia sem atendimentos). Toda listagem GET
+// lê o corpo por aqui: corpo vazio vira []. Escritas continuam com
+// response.json(), porque sempre respondem {sucesso, mensagem}.
+async function lerJsonLista(response) {
+    const texto = await response.text();
+    return texto.trim() ? JSON.parse(texto) : [];
+}

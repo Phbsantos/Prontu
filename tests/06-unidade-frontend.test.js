@@ -93,3 +93,35 @@ test('AuthApi: sessão sobrevive a localStorage corrompido/indisponível (getSes
     const { AuthApi } = h.carregarGlobais(['js/config.js', 'js/auth-api.js'], ['AuthApi'], { localStorage: quebrado, window: { location: {} } });
     assert.equal(AuthApi.getSession(), null);
 });
+
+// 2026-11-11: n8n responde 200 com corpo vazio quando a listagem não tem linhas.
+const { lerJsonLista } = h.carregarGlobais(['js/config.js'], ['lerJsonLista']);
+const respostaFalsa = (corpo) => ({ text: async () => corpo });
+
+test('lerJsonLista: corpo vazio (n8n sem linhas) vira []', async () => {
+    assert.deepEqual(Array.from(await lerJsonLista(respostaFalsa(''))), []);
+    assert.deepEqual(Array.from(await lerJsonLista(respostaFalsa('  \n'))), []);
+});
+
+test('lerJsonLista: corpo com JSON é interpretado normalmente', async () => {
+    const lista = await lerJsonLista(respostaFalsa('[{"id":1},{"id":2}]'));
+    assert.equal(lista.length, 2);
+    assert.equal(lista[1].id, 2);
+});
+
+test('lerJsonLista: JSON inválido continua falhando (não esconde erro real)', async () => {
+    await assert.rejects(() => lerJsonLista(respostaFalsa('<html>erro</html>')));
+});
+
+test('listagens GET não chamam response.json() direto (quebra com corpo vazio)', () => {
+    const ruins = [];
+    for (const arq of h.arquivosJs()) {
+        const linhas = h.read(arq).split('\n');
+        linhas.forEach((l, i) => {
+            if (!/await response\.json\(\)/.test(l)) return;
+            const contexto = linhas.slice(Math.max(0, i - 12), i).join('\n');
+            if (/LISTAR_|fetchListar/.test(contexto) && !/method:\s*'(POST|DELETE)'/.test(contexto)) ruins.push(`${arq}:${i + 1}`);
+        });
+    }
+    assert.deepEqual(ruins, []);
+});

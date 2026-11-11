@@ -53,7 +53,7 @@ const RelatoriosApi = {
             throw new Error(`Erro ao carregar relatórios (${response.status})`);
         }
 
-        const data = await response.json();
+        const data = await lerJsonLista(response);
         const records = Array.isArray(data) ? data : [];
         const transformados = records
             .map((record) => this.transformRecord(record))
