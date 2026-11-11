@@ -223,10 +223,16 @@ test('[MÉDIO] CDNs com versão fixa e SRI (integrity + crossorigin)', () => {
     for (const p of h.paginasHtml()) {
         const html = h.read(p);
         assert.doesNotMatch(html, /@latest/, `${p}: @latest`);
-        for (const [, tag] of html.matchAll(/(<script[^>]*src="https:\/\/(?:cdn\.tailwindcss\.com|unpkg\.com)[^"]*"[^>]*>)/g)) {
+        // O cdn.tailwindcss.com não envia Access-Control-Allow-Origin: com integrity+crossorigin
+        // o navegador bloqueia o script e a página fica sem estilo. Tailwind só tem versão fixa, sem SRI.
+        for (const [, tag] of html.matchAll(/(<script[^>]*src="https:\/\/cdn\.tailwindcss\.com[^"]*"[^>]*>)/g)) {
+            assert.doesNotMatch(tag, /integrity=|crossorigin/, `${p}: SRI/crossorigin no Tailwind quebra o carregamento`);
+            assert.match(tag, /tailwindcss\.com\/\d+\.\d+\.\d+"/, `${p}: sem versão exata → ${tag.slice(0, 90)}`);
+        }
+        for (const [, tag] of html.matchAll(/(<script[^>]*src="https:\/\/unpkg\.com[^"]*"[^>]*>)/g)) {
             assert.match(tag, /integrity="sha384-[A-Za-z0-9+/=]+"/, `${p}: sem SRI → ${tag.slice(0, 90)}`);
             assert.match(tag, /crossorigin="anonymous"/, `${p}: sem crossorigin`);
-            assert.match(tag, /(tailwindcss\.com\/\d+\.\d+\.\d+|@\d+\.\d+\.\d+)/, `${p}: sem versão exata → ${tag.slice(0, 90)}`);
+            assert.match(tag, /@\d+\.\d+\.\d+/, `${p}: sem versão exata → ${tag.slice(0, 90)}`);
         }
     }
 });
