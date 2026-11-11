@@ -21,6 +21,7 @@
 #   NEW_DB=prontu_db  NEW_USER=prontu_user  NEW_PREFIX=prt
 #   N8N_DB_CONTAINER=postgres_n8n  N8N_DB_USER=n8n_user  N8N_DB_NAME=n8n_db
 #   BACKUP_DIR=./backup_$(date +%F)
+#   START_STEP=1   retoma a partir de um passo (ex.: 4 se o rename já foi feito)
 set -euo pipefail
 
 : "${OLD_DB:?}" "${OLD_USER:?}" "${OLD_PREFIX:?}" "${APP_DB_CONTAINER:?}"
@@ -33,6 +34,8 @@ N8N_DB_USER="${N8N_DB_USER:-n8n_user}"
 N8N_DB_NAME="${N8N_DB_NAME:-n8n_db}"
 BACKUP_DIR="${BACKUP_DIR:-./backup_$(date +%F)}"
 DRY_RUN="${DRY_RUN:-1}"
+START_STEP="${START_STEP:-1}"
+etapa() { [ "$START_STEP" -le "$1" ]; }
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
 WF_DIR="$HERE/../n8n-workflows"
@@ -55,6 +58,7 @@ falha() { echo "$1"; [ "$DRY_RUN" = "0" ] && exit 1; echo "(dry-run: seguindo me
 [ ! -f "$CRED_FILE" ] || grep -q "\"database\": *\"$NEW_DB\"" "$CRED_FILE" || falha "$CRED_FILE precisa apontar para database=$NEW_DB"
 echo "DRY_RUN=$DRY_RUN"
 
+if etapa 1; then
 echo "== 1. Backup (obrigatório antes de qualquer alteração)"
 run mkdir -p "$BACKUP_DIR"
 if [ "$DRY_RUN" = "0" ]; then
@@ -63,10 +67,14 @@ if [ "$DRY_RUN" = "0" ]; then
 else
   echo "+ pg_dump do banco do app e do banco do n8n em $BACKUP_DIR"
 fi
+fi
 
+if etapa 2; then
 echo "== 2. Parar o n8n (sem conexões abertas no banco do app)"
 run docker stop "$N8N_CONTAINER"
+fi
 
+if etapa 3; then
 echo "== 3. Renomear banco e role do app"
 if [ "$DRY_RUN" = "0" ]; then
   psql_app -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '$OLD_DB';"
@@ -78,12 +86,33 @@ else
   echo "+ ALTER DATABASE $OLD_DB RENAME TO $NEW_DB; ALTER ROLE $OLD_USER RENAME TO $NEW_USER; ALTER ROLE ... PASSWORD (senha vinda de NEW_USER_PASSWORD)"
 fi
 echo "   >> Manual: atualize POSTGRES_USER/POSTGRES_DB (e a senha) no docker-compose/.env do Postgres do app, se existirem."
+fi
 
 echo "== 4. Remover workflows e credencial antigos do n8n"
 if [ "$DRY_RUN" = "0" ]; then
-  # Via stdin: o psql só interpola :'old' fora do -c. Tudo numa transação.
+  # Via stdin: o psql só interpola :'old' fora do -c e fora de $$. Tudo numa transação.
+  # 2026-11-11: o n8n tem FKs sem cascata (workflow_published_version e
+  # instance_credential_assignment) que travam o DELETE. O bloco DO acha, via
+  # pg_constraint, toda FK de 1 coluna com NO ACTION/RESTRICT para as duas tabelas
+  # e apaga antes só as linhas com o prefixo antigo.
   psql_n8n -v old="$OLD_PREFIX" <<'SQL'
+SET prontu.old_prefix = :'old';
 BEGIN;
+DO $$
+DECLARE r record; n bigint;
+BEGIN
+  FOR r IN
+    SELECT c.conrelid::regclass AS tabela, a.attname AS coluna
+    FROM pg_constraint c
+    JOIN pg_attribute a ON a.attrelid = c.conrelid AND a.attnum = c.conkey[1]
+    WHERE c.contype = 'f' AND c.confdeltype IN ('a', 'r') AND array_length(c.conkey, 1) = 1
+      AND c.confrelid IN ('workflow_entity'::regclass, 'credentials_entity'::regclass)
+  LOOP
+    EXECUTE format('DELETE FROM %s WHERE %I::text LIKE %L', r.tabela, r.coluna, current_setting('prontu.old_prefix') || '%');
+    GET DIAGNOSTICS n = ROW_COUNT;
+    RAISE NOTICE '% (%): % linha(s) removida(s)', r.tabela, r.coluna, n;
+  END LOOP;
+END $$;
 DELETE FROM workflow_entity WHERE id LIKE :'old' || '%';
 DELETE FROM credentials_entity WHERE id LIKE :'old' || '%';
 COMMIT;
